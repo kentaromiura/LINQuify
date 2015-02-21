@@ -9,7 +9,7 @@ function FromClause(itemName, srcExpression){
 module.exports = function(mutableSource){
 
   var source = mutableSource.source,
-      regExp = /\s*from\s+(.*?)\s*in\s*(.*)/gm,
+      regExp = /\s*from\s+(.*?)\s*in\s*([\s\S]*)/gm,
       matches = regExp.exec(source),
       srcExpression = notQueryBody(matches[2]);
 
