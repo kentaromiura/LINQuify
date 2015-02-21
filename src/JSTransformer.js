@@ -2,7 +2,6 @@ function name(obj){
   return obj.constructor && obj.constructor.name || Object.prototype.toString.call(obj).slice(8, -1)
 }
 function genFinal(output, finalQueryClause, from, pre, post){
-  console.log(name(finalQueryClause))
   switch(name(finalQueryClause)){
     case 'SelectClause':
       output.push('.map(function(', from.itemName, '){',
