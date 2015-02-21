@@ -1,15 +1,5 @@
 var SelectClause = require('./SelectClause')
-
-// TODO: refactor this using Array#reduce making it generic
-function whatsNext(source){
-  var sourcePosition = source.indexOf('select'),
-      groupPosition = source.indexOf('group'),
-      result = 'group'
-
-  if (~sourcePosition && (sourcePosition < groupPosition || !~groupPosition)) result = 'select'
-
-  return result;
-}
+var whatsNext = require('./utils/next')(['select', 'group'])
 
 //final-query-clause ::= (select-clause | groupby-clause)
 module.exports = function(mutableSource){
@@ -20,6 +10,8 @@ module.exports = function(mutableSource){
     case 'group':
       //todo: handle groups
       return 'TODO'
+    default:
+      throw new Error('parse error in finalQueryClause');
       break
   }
 }

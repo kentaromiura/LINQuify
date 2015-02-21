@@ -1,5 +1,5 @@
-var FromClause = require('./FromClause'),
-    QueryBody = require('./QueryBody')
+var FromClause = require('./parser/FromClause'),
+    QueryBody = require('./parser/QueryBody')
 
 function QueryExpression(fromClause, queryBody){
   this.fromClause = fromClause

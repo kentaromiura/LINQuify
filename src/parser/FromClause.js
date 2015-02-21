@@ -1,4 +1,4 @@
-var notQueryBody = require('./notQueryBody')
+var notQueryBody = require('./utils/notQueryBody')
 
 function FromClause(itemName, srcExpression){
   this.itemName = itemName
@@ -9,7 +9,7 @@ function FromClause(itemName, srcExpression){
 module.exports = function(mutableSource){
 
   var source = mutableSource.source,
-      regExp = /\s*from\s*(.*?)\s*in\s*(.*)/gm,
+      regExp = /\s*from\s+(.*?)\s*in\s*(.*)/gm,
       matches = regExp.exec(source),
       srcExpression = notQueryBody(matches[2]);
 
