@@ -5,11 +5,13 @@ var clint = require('clint')(),
     transformer = require('./src/JSTransformer'),
     options = {
       help: false,
-      file: null
+      file: null,
+      debug: false
     }
 
 // clint commands
 clint.command('--file', '-f', 'The linq file')
+clint.command('--debug', '-d', 'debug messages')
 
 // options switcher
 clint.on('command', function(name, value) {
@@ -20,11 +22,19 @@ clint.on('command', function(name, value) {
     case '--file':
       options.file = value
       break
+    case '--debug':
+      options.debug = true
+      break
   }
 })
 
 function start(linq, relativePath){
-  console.log(transformer(parser(linq)));
+  var ast = parser(linq)
+  if(options.debug){
+    console.log('AST:\n', JSON.stringify(ast, null, 2), '\n')    
+  }
+
+  console.log(transformer(ast));
 }
 
 // command handler
