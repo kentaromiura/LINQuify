@@ -43,16 +43,15 @@ Partial support:
 ----------------
 - query-expression
 - query-body
+- query-body-clause
+
 
 Unsupported:
 ------------
-- query-body-clause
 - query-continuation
 - join-clause
 - let-clause
 - orderby-clause
-- query-continuation
-
 
 
 Build
