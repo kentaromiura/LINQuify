@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>Linq parser tester</title>
     <style>
       body {
         font-family: Helvetica;
@@ -30,10 +31,11 @@
             destination = document.getElementById('destination'),
             execute = document.getElementById('execute'),
             inline = document.getElementById('inline')
+            groupBy = document.getElementById('groupby')
 
         button.onclick = function(){
           var sourceText = source.value;
-          var finder = /(from((.|\s)*)select(.*))\n/gm;
+          var finder = /(from\s+((\S|\s)*)(?:select|group)(.*))\n/gm;
 
           var output = sourceText;
           if(finder.test(sourceText)) output = sourceText.replace(finder, function(_, find){
@@ -57,15 +59,19 @@
         multipleFrom.onclick = function(){
           source.value = "alert((\n  from lower in 'xyz'.split('')\n  where lower !== 'x'\n  from upper in 'ABC'.split('')\n  from static in '123'.split('')\n  select JSON.stringify({ lower: lower, upper: upper, static: static })\n).join('\\n'))"
         }
+        groupby.onclick = function(){
+          source.value = "var res = from student in [\n            { name : 'A', lastName: 'A'},\n            { name : 'B', lastName: 'A'},\n            { name : 'A', lastName: 'C'},\n            { name : 'A', lastName: 'D'}\n          ]\ngroup student by student.lastName\nalert(JSON.stringify(res, null, 2))";
+
+        }
       }
     </script>
   </head>
   <body>
     <section id="warning">
-    Warning: this is in a very early state, currently it only supports <b>from</b>, <b>where</b> and <b>select</b>, the parser is very stupid currently and need a newline after the linq expression in order to use it inline.
+    Warning: this is in a very early state, currently it only supports <b>from</b>, <b>where</b>, <b>select</b> and <b>group by</b>, the parser is very stupid currently and need a newline after the linq expression.
     </section>
     Source:<br />
-    <textarea id=source rows="10" cols="200">var res = from x in [1,2,3]
+    <textarea id=source rows="10" cols="140">var res = from x in [1,2,3]
       select x + 3
       alert(res.join('-'))
     </textarea>
@@ -73,9 +79,10 @@
     <button id=inline>try inline linq (requires newline)</button>
     <button id=where>where</button>
     <button id=multipleFrom>multiple from</button>
+    <button id=groupby>group by</button>
     <hr />
     Linquified:<br />
-    <textarea id=destination rows="10" cols="200"></textarea>
+    <textarea id=destination rows="10" cols="140"></textarea>
     <button id=execute>Try to execute</button>
   </body>
 </html>

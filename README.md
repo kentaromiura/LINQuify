@@ -35,13 +35,14 @@ Support:
 - from-clause
 - select-clause
 - where-clause
+- groupby-clause
+
+- final-query-clause
 
 Partial support:
 ----------------
 - query-expression
 - query-body
-- final-query-clause
-
 
 Unsupported:
 ------------
@@ -49,9 +50,7 @@ Unsupported:
 - query-continuation
 - join-clause
 - let-clause
-
 - orderby-clause
-- groupby-clause
 - query-continuation
 
 
