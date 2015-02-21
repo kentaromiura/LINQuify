@@ -1,6 +1,26 @@
 function name(obj){
   return obj.constructor && obj.constructor.name || Object.prototype.toString.call(obj).slice(8, -1)
 }
+function genFinal(output, finalQueryClause, from, pre, post){
+  console.log(name(finalQueryClause))
+  switch(name(finalQueryClause)){
+    case 'SelectClause':
+      output.push('.map(function(', from.itemName, '){',
+        'return ',
+          pre.join(''),
+          finalQueryClause.selectExpression ,
+          post.join(''),
+      '})')
+      break
+    case 'GroupByClause':
+      output.push('.reduce(function(prev, ', finalQueryClause.selectExpression,'){',
+        'return (prev[', finalQueryClause.keyExpression,'] || (prev[', finalQueryClause.keyExpression, '] = [])).push(', finalQueryClause.selectExpression,'), prev',
+      '}, {})')
+      break
+
+
+  }
+}
 
 module.exports = function(ast){
   var from = ast.fromClause,
@@ -34,12 +54,7 @@ module.exports = function(ast){
     })
   }
 
-  output.push('.map(function(', from.itemName, '){',
-    'return ',
-      pre.join(''),
-      body.finalQueryClause.selectExpression ,
-      post.join(''),
-  '})')
+  genFinal(output, body.finalQueryClause, from, pre, post)
   output.push(after.join(''))
   return output.join('')
 }
