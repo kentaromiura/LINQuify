@@ -1,7 +1,8 @@
-var FinalQueryClause = require('./FinalQueryClause')
 //query-body ::= query-body-clause* final-query-clause query-continuation?
-var whatsNext = require('./utils/next')(['from', 'join', 'let', 'where', 'orderby'])
-var WhereClause = require('./WhereClause');
+var whatsNext = require('./utils/next')(['from', 'join', 'let', 'where', 'orderby']),
+    WhereClause = require('./WhereClause'),
+    FromClause = require('./FromClause'),
+    FinalQueryClause = require('./FinalQueryClause')
 
 function QueryBody(mutableSource){
 
@@ -11,7 +12,7 @@ function QueryBody(mutableSource){
   var next
   while (next = whatsNext(mutableSource.source)){
     switch(next){ //todo: implement dependency injection
-      case 'from':
+
       case 'join':
       case 'let':
       case 'orderby':
@@ -19,6 +20,10 @@ function QueryBody(mutableSource){
         return
       case 'where':
         this.queryBodyClauses.push(WhereClause(mutableSource))
+      break
+      case 'from':
+        this.queryBodyClauses.push(FromClause(mutableSource))
+        break
     }
   }
   this.finalQueryClause = FinalQueryClause(mutableSource);
