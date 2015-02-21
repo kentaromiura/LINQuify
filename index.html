@@ -45,6 +45,12 @@
         inline.onclick = function(){
           source.value = "alert((\n  from x in [1,2,3]\n  select Math.pow(x, 3)\n).join('-'))"
         }
+        where.onclick = function(){
+          source.value = "alert((\n  from x in [1,2,3]\n  where x < 3 && x > 1\n  select x + 3\n).join(''))"
+        }
+        multipleFrom.onclick = function(){
+          source.value = "alert((\n  from lower in 'xyz'.split('')\n  where lower !== 'x'\n  from upper in 'ABC'.split('')\n  from static in '123'.split('')\n  select JSON.stringify({ lower: lower, upper: upper, static: static })\n).join('\\n'))"
+        }
       }
     </script>
   </head>
@@ -56,6 +62,8 @@
     </textarea>
     <button id=test >Transform</button><br/>
     <button id=inline>try inline linq (requires newline)</button>
+    <button id=where>where</button>
+    <button id=multipleFrom>multiple from</button>
     <hr />
     Linquified:<br />
     <textarea id=destination rows="6" cols="50"></textarea>
