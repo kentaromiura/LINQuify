@@ -13,6 +13,12 @@
       textarea{
         background-color:aliceblue;
       }
+      #warning{
+        border:1px solid red;
+        background-color: rgba(255,180,180,0.9);
+        padding:1em;
+        margin:1em;
+      }
     </style>
     <script>window.LINQ = {}</script>
     <script src="browser/parser.js"></script>
@@ -55,8 +61,11 @@
     </script>
   </head>
   <body>
+    <section id="warning">
+    Warning: this is in a very early state, currently it only supports <b>from</b>, <b>where</b> and <b>select</b>, the parser is very stupid currently and need a newline after the linq expression in order to use it inline.
+    </section>
     Source:<br />
-    <textarea id=source rows="6" cols="50">var res = from x in [1,2,3]
+    <textarea id=source rows="10" cols="200">var res = from x in [1,2,3]
       select x + 3
       alert(res.join('-'))
     </textarea>
@@ -66,7 +75,7 @@
     <button id=multipleFrom>multiple from</button>
     <hr />
     Linquified:<br />
-    <textarea id=destination rows="6" cols="50"></textarea>
+    <textarea id=destination rows="10" cols="200"></textarea>
     <button id=execute>Try to execute</button>
   </body>
 </html>
