@@ -34,7 +34,7 @@ Support:
 --------
 - from-clause
 - select-clause
-
+- where-clause
 
 Partial support:
 ----------------
@@ -49,7 +49,7 @@ Unsupported:
 - query-continuation
 - join-clause
 - let-clause
-- where-clause
+
 - orderby-clause
 - groupby-clause
 - query-continuation
