@@ -3,15 +3,18 @@ var clint = require('clint')(),
     fs = require('fs'),
     parser = require('./src/LinqParser'),
     transformer = require('./src/JSTransformer'),
+    astTransformer = require('./src/astTransform'),
     options = {
       help: false,
       file: null,
-      debug: false
+      debug: false,
+      ast: false
     }
 
 // clint commands
 clint.command('--file', '-f', 'The linq file')
 clint.command('--debug', '-d', 'debug messages')
+clint.command('--ast', '-a', 'use the ast transformer')
 
 // options switcher
 clint.on('command', function(name, value) {
@@ -22,6 +25,9 @@ clint.on('command', function(name, value) {
     case '--file':
       options.file = value
       break
+    case '--ast':
+      options.ast = true
+      break
     case '--debug':
       options.debug = true
       break
@@ -31,9 +37,10 @@ clint.on('command', function(name, value) {
 function start(linq, relativePath){
   var ast = parser(linq)
   if(options.debug){
-    console.log('AST:\n', JSON.stringify(ast, null, 2), '\n')    
+    console.log('source:\n', linq, '\n')
+    console.log('AST:\n', JSON.stringify(ast, null, 2), '\n')
   }
-
+  if(options.ast) transformer = astTransformer
   console.log(transformer(ast));
 }
 
